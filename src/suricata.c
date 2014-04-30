@@ -2272,6 +2272,7 @@ int main(int argc, char **argv)
         }
         /* Spawn the flow manager thread */
         FlowManagerThreadSpawn();
+        FlowRecyclerThreadSpawn();
         StreamTcpInitConfig(STREAM_VERBOSE);
 
         SCPerfSpawnThreads();
@@ -2379,6 +2380,7 @@ int main(int argc, char **argv)
 
     if (suri.run_mode != RUNMODE_UNIX_SOCKET) {
         SCPerfReleaseResources();
+        FlowKillFlowRecyclerThread();
         FlowShutdown();
         StreamTcpFreeConfig(STREAM_VERBOSE);
     }
